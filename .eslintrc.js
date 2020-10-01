@@ -29,7 +29,8 @@ module.exports = {
     // to disable the rule, set it to off. Instead of using words, we can also use the integer equivalents - 0 for error, 1 for warnings, and 2 for off
     // 1 displays it as a warning in the console
     // To set the rules conditionally, so that it awakens the right action for development, and production
-    'no-unused-vars': process.env.NODE_ENV === 'production' ? 2 : 1    // display an error, if it is used in production, (i.e. 2) or display a warning, if it is used in development (i.e. 1)
+    'no-unused-vars': process.env.NODE_ENV === 'production' ? 2 : 1,    // display an error, if it is used in production, (i.e. 2) or display a warning, if it is used in development (i.e. 1)
     // if you want to disable eslint, you can remove the eslint loader from the webpack configuration, this can be found in build -> webpack.base.conf.js
+    // "indent": ["error", 4],
   }
 }

@@ -1,7 +1,6 @@
 <!-- This is the main component. Think of it like a layout of our application -->
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <div class="container">
       <router-view/>     <!-- This components renders the component of the active route -->
     </div>
