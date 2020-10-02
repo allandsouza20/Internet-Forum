@@ -1,30 +1,30 @@
 <template>
     <div class="thread">
-                  <div>
-                      <p>
-                          <a href="#">{{ thread.title }}</a>
-                      </p>
-                      <p class="text-faded text-xsmall">
-                          By <a href="#">{{ user.name }}</a>, {{ thread.publishedAt }}
-                      </p>
-                  </div>
+      <div>
+          <p>
+              <a href="#">{{ thread.title }}</a>
+          </p>
+          <p class="text-faded text-xsmall">
+              By <a href="#">{{ user.name }}</a>, {{ thread.publishedAt }}
+          </p>
+      </div>
 
-                  <div class="activity">
-                      <p class="replies-count">
-                          {{ repliesCount }} replies  <!-- The number of replies are taken as the number of posts the user has -1 -->
-                      </p>
+      <div class="activity">
+          <p class="replies-count">
+              {{ repliesCount }} replies  <!-- The number of replies are taken as the number of posts the user has -1 -->
+          </p>
 
-                      <!-- <img class="avatar-medium" src="http://i0.kym-cdn.com/photos/images/facebook/000/010/934/46623-batman_pikachu_super.png" alt=""> -->
+          <!-- <img class="avatar-medium" src="http://i0.kym-cdn.com/photos/images/facebook/000/010/934/46623-batman_pikachu_super.png" alt=""> -->
 
-                        <!-- This div contains information about the last reply or the last post -->
-                      <!-- <div>
-                          <p class="text-xsmall">
-                              <a href="#">Bruce Wayne</a>
-                          </p>
-                          <p class="text-xsmall text-faded">2 hours ago</p>
-                      </div> -->
-                  </div>
-              </div>
+            <!-- This div contains information about the last reply or the last post -->
+          <!-- <div>
+              <p class="text-xsmall">
+                  <a href="#">Bruce Wayne</a>
+              </p>
+              <p class="text-xsmall text-faded">2 hours ago</p>
+          </div> -->
+      </div>
+  </div>
 </template>
 
 <script>
