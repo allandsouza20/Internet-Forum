@@ -1,7 +1,8 @@
 // This file contains the logic for our app
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+// Notice that we can specify any name when we import a component
+import Home from '@/pages/HomePage'
 import ThreadShow from '@/components/ThreadShow'
 // This tells vue to use the router plugin
 Vue.use(Router)
@@ -12,8 +13,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: HelloWorld
+      name: 'Home',
+      component: Home
     },
     {
       // here, :id defines a dynamic segment

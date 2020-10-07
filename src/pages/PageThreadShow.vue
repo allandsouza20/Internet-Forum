@@ -12,7 +12,7 @@
 
 <script>
 // To be able to use a component inside another, you will need to import it to register it.
-import ThreadListItem from './ThreadListItem'
+import ThreadListItem from '@/components/ThreadListItem'
 
 export default {
     // components option is an object that contains the components
