@@ -18,12 +18,12 @@ export default {
 <style scoped>
   h1 {
     font-size: 100px;
-  },
+  }
   
   p {
     font-size: 50px;
     font-weight: 100;
-  },
+  }
 
   div {
     text-align: center;
