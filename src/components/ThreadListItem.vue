@@ -2,7 +2,11 @@
     <div class="thread">
       <div>
           <p>
-              <a href="#">{{ thread.title }}</a>
+              <!-- <a :href="`/thread/${thread['.key']}`"></a>    Here, we are linking the contents of the thread with the title, so that whenever a user clicks on a thread, he / she is directed to the contents of the thread -->
+              <!-- Here, a directs us to the specific thread but it reloads the page. To avoid this, we can use the router-link component -->
+              <router-link :to="{name: 'ThreadShow', params: {id: thread['.key']}}">  <!-- router-link renders an anchor by default, You can also specify `/thread/${thread['.key']}`, but using this will not allow us to change the path in the router, i.e. index.js-->
+                {{ thread.title }}
+              </router-link>  <!-- to can be a path or it can be a state of an object -->
           </p>
           <p class="text-faded text-xsmall">
               By <a href="#">{{ user.name }}</a>, {{ thread.publishedAt }}
