@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // Notice that we can specify any name when we import a component
 import Home from '@/pages/HomePage'
-import ThreadShow from '@/components/ThreadShow'
+import ThreadShow from '@/pages/PageThreadShow'
 import PageNotFound from '@/pages/PageNotFound'
 
 // This tells vue to use the router plugin

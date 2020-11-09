@@ -2,13 +2,13 @@
 <template>
   <div class="col-full">
     <h1>Welcome to the forum</h1>
-    <ThreadList v-bind:threads="threads" />    <!-- NOTE: The component template needs to be wrapped in one root element, in this case, div -->
+    <ThreadList :threads="threads"/>    <!-- NOTE: The component template needs to be wrapped in one root element, in this case, div -->
   </div>
 </template>
 
 <script>
 import sourceData from '@/data'     // Here, sourceData is a local variable, more like a file handler. @ will directly refer to the src directory. You can also you ../ to go back a directory to navigate to the json file.
-import ThreadList from '@/pages/PageThreadShow'
+import ThreadList from '@/components/ThreadList'
 console.log(sourceData)
 export default {
 
