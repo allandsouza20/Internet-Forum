@@ -58,10 +58,11 @@ export default {
   // state: used to describe all the data around our application
   // In Vue.js, the methods are functions with access to the component instance
   methods: {
-    addPost (eventData) {
+    addPost ({post}) {
+      // Here, {post} is a destructuring assignment
       // console.log(eventData)
-      const post = eventData.post   // we can grab the post from the eventData object
-      const postId = eventData.post['.key']
+      // const post = eventData.post   // we can grab the post from the eventData object
+      const postId = post['.key']
       // we can access the post object using sourceData.posts
       this.$set(sourceData.posts, postId, post)    // Vue.set is used to make the changes reactive
       // to use Vue set, we'll have to import Vue, instead of this, we can use the instance alias, i.e. this.$set
