@@ -23,7 +23,7 @@
 
 
         <div class="post-date text-faded">
-            {{ post.publishedAt }}
+            {{ humanFriendlyDate }}
         </div>
 
         
@@ -33,6 +33,7 @@
 <script>
 // to render a thread, add @sourceData
 import sourceData from '@/data'
+import moment from 'moment'
 // Note: All components must export an object with options by default
 // in Vue.js every component instance has it's own isolated scope, this means that you shouldn't reference parent data with it's child component.
 // all threads or components must be passed a thread id property to know which thread to show.
@@ -55,6 +56,12 @@ export default {
         // const postIdsArray = Object.keys(posts)
         // return postIdsArray.length
       return Object.keys(this.user.posts).length
+    },
+
+    // computed property to transform the timestamp
+    // NOTE: computed properties do not accept arguements
+    humanFriendlyDate () {
+      return moment.unix(this.post.publishedAt).format('MMMM Do YYYY, h:mm:ss a')
     }
   }
 }
