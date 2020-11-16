@@ -23,7 +23,10 @@
 
 
         <div class="post-date text-faded">
-            {{ humanFriendlyDate }}
+          <!-- The filter humanFirendlyDate is appended using a pipe symbol. We can also append multiple filters using the 
+          pipe operator, e.g. | humanFriendlyDate | uppercase, if we had a new filter that would convert the text to uppercase -->
+          <!-- NOTE: Filters do not allow you to do something new, they are just methods with a special syntax -->
+            {{ post.publishedAt | humanFriendlyDate }}  
         </div>
 
         
@@ -56,12 +59,13 @@ export default {
         // const postIdsArray = Object.keys(posts)
         // return postIdsArray.length
       return Object.keys(this.user.posts).length
-    },
+    }
+  },
 
-    // computed property to transform the timestamp
-    // NOTE: computed properties do not accept arguements
-    humanFriendlyDate () {
-      return moment.unix(this.post.publishedAt).format('MMMM Do YYYY, h:mm:ss a')
+  filters: {
+    // the filter needs a date arguement and then
+    humanFriendlyDate (date) {
+      return moment.unix(date).format('MMMM Do YYYY, h:mm:ss a')
     }
   }
 }
