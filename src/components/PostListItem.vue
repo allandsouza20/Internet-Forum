@@ -34,16 +34,12 @@
 <script>
 // to render a thread, add @sourceData
 import sourceData from '@/data'
-import AppDate from './AppDate'
 // Note: All components must export an object with options by default
 // in Vue.js every component instance has it's own isolated scope, this means that you shouldn't reference parent data with it's child component.
 // all threads or components must be passed a thread id property to know which thread to show.
 export default {
     // props is used to pass data to the child component
     // using a computed property, we can make sure if changes happen in sourceData
-  components: {
-    AppDate
-  },
 
   props: {
     post: {
