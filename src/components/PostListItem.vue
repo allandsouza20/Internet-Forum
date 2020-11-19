@@ -22,13 +22,9 @@
 
 
 
-        <div 
-        class="post-date text-faded"
-        v-bind:title="post.publishedAt | humanFriendlyDate">   <!-- title is a HTML attribute which displays the required text on hover -->
-          <!-- The filter humanFriendlyDate is appended using a pipe symbol. We can also append multiple filters using the 
-          pipe operator, e.g. | humanFriendlyDate | uppercase, if we had a new filter that would convert the text to uppercase -->
-          <!-- NOTE: Filters do not allow you to do something new, they are just methods with a special syntax -->
-            {{ post.publishedAt | diffForHumans }}  
+        <div class="post-date text-faded">
+          <!-- The timestamp that we want to display here is post.publishedAt -->
+          <AppDate :timestamp="post.publishedAt"/>    
         </div>
 
         
@@ -38,13 +34,17 @@
 <script>
 // to render a thread, add @sourceData
 import sourceData from '@/data'
-import moment from 'moment'
+import AppDate from './AppDate'
 // Note: All components must export an object with options by default
 // in Vue.js every component instance has it's own isolated scope, this means that you shouldn't reference parent data with it's child component.
 // all threads or components must be passed a thread id property to know which thread to show.
 export default {
     // props is used to pass data to the child component
     // using a computed property, we can make sure if changes happen in sourceData
+  components: {
+    AppDate
+  },
+
   props: {
     post: {
       required: true,
@@ -61,19 +61,6 @@ export default {
         // const postIdsArray = Object.keys(posts)
         // return postIdsArray.length
       return Object.keys(this.user.posts).length
-    }
-  },
-
-  filters: {
-    // the filter needs a date arguement and then
-    humanFriendlyDate (date) {
-      // use return moment.unix(date).locale('fr').format('MMMM Do YYYY, h:mm:ss a') to change the language in which the date is displayed to French
-      return moment.unix(date).format('MMMM Do YYYY, h:mm:ss a')
-    },
-
-    // this filter gives us the time that was passed since the post was published
-    diffForHumans (date) {
-      return moment.unix(date).fromNow()
     }
   }
 }
