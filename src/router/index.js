@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // Notice that we can specify any name when we import a component
 import Home from '@/pages/HomePage'
 import ThreadShow from '@/pages/PageThreadShow'
+import Forum from '@/pages/PageForum'
 import PageNotFound from '@/pages/PageNotFound'
 
 // This tells vue to use the router plugin
@@ -17,6 +18,13 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/forum/:id',
+      name: 'Forum',
+      component: Forum,
+      // to set the route parameters as component props, we must set props to true
+      props: true
     },
     {
       // here, :id defines a dynamic segment
