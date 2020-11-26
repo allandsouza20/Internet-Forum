@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // Notice that we can specify any name when we import a component
 import Home from '@/pages/HomePage'
 import ThreadShow from '@/pages/PageThreadShow'
+import Category from '@/pages/PageCategory'
 import Forum from '@/pages/PageForum'
 import PageNotFound from '@/pages/PageNotFound'
 
@@ -18,6 +19,13 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/category/:id',
+      name: 'Category',
+      component: Category,
+      // to set the route parameters as component props, we must set props to true
+      props: true
     },
     {
       path: '/forum/:id',
