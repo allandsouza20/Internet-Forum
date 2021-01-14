@@ -6,6 +6,20 @@ import {countObjectProperties} from '../utils'
 // install the vuex plugin in the application
 Vue.use(Vuex)
 
+// this function returns the function that is the actual mutation
+const makeAppendChildToParentMutation = ({parent, child}) =>
+  (state, {childId, parentId}) => {
+    const resource = state[parent][parentId]   // user.name === user['name']
+    // check if the forum already has a post property
+    if (!resource[child]) {
+      // set the post property
+      Vue.set(resource, child, {})
+    }
+    // to use Vue set, we'll have to import Vue, instead of this, we can use the instance alias, i.e. this.$set
+    // parameters are object, propertyName, value
+    // append post to forum
+    Vue.set(resource[child], childId, childId)
+  }
 // export the Vuex store
 export default new Vuex.Store({
   state: {
@@ -35,8 +49,8 @@ export default new Vuex.Store({
       // Math.floor returns the largest integer that is less than or equal to the given number
       post.publishedAt = Math.floor(Date.now() / 1000)
       commit('setPost', {post, postId})
-      commit('appendPostToThread', {threadId: post.threadId, postId})
-      commit('appendPostToUser', {userId: post.userId, postId})
+      commit('appendPostToThread', {parentId: post.threadId, childId: postId})
+      commit('appendPostToUser', {parentId: post.userId, childId: postId})
 
       return Promise.resolve(state.posts[postId])
     },
@@ -52,8 +66,8 @@ export default new Vuex.Store({
         const thread = {'.key': threadId, title, forumId, publishedAt, userId}
 
         commit('setThread', {threadId, thread})
-        commit('appendThreadToForum', {forumId, threadId})
-        commit('appendThreadToUser', {userId, threadId})
+        commit('appendThreadToForum', {parentId: forumId, childId: threadId})
+        commit('appendThreadToUser', {parentId: userId, childId: threadId})
 
         dispatch('createPost', {text, threadId})
           .then(post => {
@@ -126,49 +140,12 @@ export default new Vuex.Store({
       Vue.set(state.threads, threadId, thread)
     },
 
-    appendPostToThread (state, {postId, threadId}) {
-      const thread = state.threads[threadId]
-      // check if the forum already has a post property
-      if (!thread.posts) {
-        // set the post property
-        Vue.set(thread, 'posts', {})
-      }
-      // to use Vue set, we'll have to import Vue, instead of this, we can use the instance alias, i.e. this.$set
-      // parameters are object, propertyName, value
-      // append post to forum
-      Vue.set(thread.posts, postId, postId)
-    },
+    appendPostToThread: makeAppendChildToParentMutation({parent: 'threads', child: 'posts'}),
 
-    appendPostToUser (state, {postId, userId}) {
-      const user = state.users[userId]
-      // check if the forum already has a post property
-      if (!user.posts) {
-        // set the post property
-        Vue.set(user, 'posts', {})
-      }
-      // append the new post ID to the users posts object that contains the id's of the post that the user has written
-      // append post to user
-      Vue.set(user.posts, postId, postId)
-    },
+    appendPostToUser: makeAppendChildToParentMutation({parent: 'users', child: 'posts'}),
 
-    appendThreadToForum (state, {forumId, threadId}) {
-      const forum = state.forums[forumId]
-      if (!forum.threads) {
-        // set the post property
-        Vue.set(forum, 'threads', {})
-      }
-      // append the threadId to the forum.threads property
-      Vue.set(forum.threads, threadId, threadId)
-    },
+    appendThreadToForum: makeAppendChildToParentMutation({parent: 'forums', child: 'threads'}),
 
-    appendThreadToUser (state, {userId, threadId}) {
-      const user = state.users[userId]
-      if (!user.threads) {
-        // set the post property
-        Vue.set(user, 'threads', {})
-      }
-      // append post to forum
-      Vue.set(user.threads, threadId, threadId)
-    }
+    appendThreadToUser: makeAppendChildToParentMutation({parent: 'users', child: 'threads'})
   }
 })
