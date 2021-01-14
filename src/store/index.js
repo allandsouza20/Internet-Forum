@@ -32,6 +32,8 @@ export default new Vuex.Store({
       commit('setPost', {post, postId})
       commit('appendPostToThread', {threadId: post.threadId, postId})
       commit('appendPostToUser', {userId: post.userId, postId})
+
+      return Promise.resolve(state.posts[postId])
     },
 
     createThread ({state, commit, dispatch}, {text, title, forumId}) {
@@ -42,13 +44,16 @@ export default new Vuex.Store({
         // to get it in seconds, we can divide it by 1000
         // Math.floor returns the largest integer that is less than or equal to the given number
         const publishedAt = Math.floor(Date.now() / 1000)
-        const forum = {'.key': threadId, title, forumId, publishedAt, userId}
+        const thread = {'.key': threadId, title, forumId, publishedAt, userId}
 
-        commit('setThread', {threadId, forum})
+        commit('setThread', {threadId, thread})
         commit('appendThreadToForum', {forumId, threadId})
         commit('appendThreadToUser', {userId, threadId})
 
         dispatch('createPost', {text, threadId})
+          .then(post => {
+            commit('setThread', {threadId, thread: {...thread, firstPostId: post['.key']}})
+          })
         resolve(state.threads[threadId])
       })
     },
