@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import sourceData from '@/data'
+import {countObjectProperties} from '../utils'
 
 // install the vuex plugin in the application
 Vue.use(Vuex)
@@ -17,7 +18,11 @@ export default new Vuex.Store({
     // a getter can be used anywhere in our application
     authUser (state) {
       return state.users[state.authId]
-    }
+    },
+
+  //  getters used to return the count of the users posts and the thread count
+    usersThreadsCount: state => id => countObjectProperties(state.users[id].threads),
+    usersPostsCount: state => id => countObjectProperties(state.users[id].posts)
   },
 
   actions: {

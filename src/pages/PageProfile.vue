@@ -3,14 +3,10 @@
     <UserProfileCard
       v-if="!edit"
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadCount="userThreadsCount"
     />
     <UserProfileCardEditor
       v-else
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadCount="userThreadsCount"
     />
     <div class="col-7 push-top">
       <div class="profile-header">
@@ -31,7 +27,6 @@ import PostList from '@/components/PostList'
 import UserProfileCard from '@/components/UserProfileCard'
 import UserProfileCardEditor from '@/components/UserProfileCardEditor'
 import {mapGetters} from 'vuex'
-import {countObjectProperties} from '@/utils'
 
 export default {
   name: 'PageProfile',
@@ -52,16 +47,6 @@ export default {
     ...mapGetters(({
       user: 'authUser'    // map the local user property to the authUser getter
     })),
-
-    userThreadsCount () {
-      return countObjectProperties(this.user.threads)
-      // return this.user.threads ? Object.keys(this.user.threads).length : 0
-    },
-
-    userPostsCount () {
-      return countObjectProperties(this.user.posts)
-      // return this.user.posts ? Object.keys(this.user.posts).length : 0
-    },
 
     userPosts () {
       // if the user has any posts, find it in the state
