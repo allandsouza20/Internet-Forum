@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {countObjectProperties} from '../utils'
+import firebase from 'firebase'
 
 // install the vuex plugin in the application
 Vue.use(Vuex)
@@ -125,6 +126,42 @@ export default new Vuex.Store({
     updateUser ({commit}, user) {
       // the payload here is the userId that we can access under the key property of the user object
       commit('setUser', {userId: user['.key'], user})
+    },
+
+    fetchThread ({state, commit}, {id}) {
+      console.log('🔥🔥', id)
+      return new Promise((resolve, reject) => {
+        // fetch thread
+        firebase.database().ref('threads').child(id).once('value', snapshot => {
+          const thread = snapshot.val()
+          commit('setThread', {threadId: snapshot.key, thread: {...thread, '.key': snapshot.key}})
+          resolve(state.threads[id])
+        })
+      })
+    },
+
+    fetchUser ({state, commit}, {id}) {
+      console.log('🔥🎑', id)
+      return new Promise((resolve, reject) => {
+        // fetch thread
+        firebase.database().ref('users').child(id).once('value', snapshot => {
+          const user = snapshot.val()
+          commit('setUser', {userId: snapshot.key, user: {...user, '.key': snapshot.key}})
+          resolve(state.users[id])
+        })
+      })
+    },
+
+    fetchPost ({state, commit}, {id}) {
+      console.log('🔥🎇', id)
+      return new Promise((resolve, reject) => {
+        // fetch thread
+        firebase.database().ref('posts').child(id).once('value', snapshot => {
+          const post = snapshot.val()
+          commit('setPost', {postId: snapshot.key, post: {...post, '.key': snapshot.key}})
+          resolve(state.posts[id])
+        })
+      })
     }
   },
 
