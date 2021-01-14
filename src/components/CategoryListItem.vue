@@ -12,7 +12,6 @@
 
 <script>
 import ForumList from './ForumList'
-import sourceData from '@/data'
 
 export default {
   components: {
@@ -27,9 +26,9 @@ export default {
   },
 
   computed: {
-    // this computed property will find the forums of a category in sourceData and returns them in an Array
+    // this computed property will find the forums of a category in this.$store.state and returns them in an Array
     categoryForums () {
-      return Object.values(sourceData.forums).filter(forum => forum.categoryId === this.category['.key'])
+      return Object.values(this.$store.state.forums).filter(forum => forum.categoryId === this.category['.key'])
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="forum-wrapper">
     <div class="col-full push-top">
-      
+
 
       <div class="forum-header">
         <div class="forum-details">
@@ -21,7 +21,6 @@
 
 <script>
 import ThreadList from '@/components/ThreadList'
-import sourceData from '@/data'
 
 export default {
   components: {
@@ -43,12 +42,12 @@ export default {
     // i.e. they will be evaluated only once. Thus if a user creates a new thread, it won't show up.
 
     forum () {
-      return sourceData.forums[this.id]
+      return this.$store.state.forums[this.id]
     },
 
     threads () {
       // Object.values is used to typecast the object to an array
-      return Object.values(sourceData.threads)
+      return Object.values(this.$store.state.threads)
       .filter(thread => thread.forumId === this.id)
     }
   }

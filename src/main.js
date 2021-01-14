@@ -7,6 +7,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from '@/store'
 import AppDate from '@/components/AppDate'
 
 // This is used to register a component globally, meaning, it can be used within any other component without having to register it
@@ -19,6 +20,8 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  // inject store into all components. This is the shorthand for store: store
+  store,
   template: '<App/>',
   components: { App }
 })
