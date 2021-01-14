@@ -27,6 +27,12 @@ export default new Vuex.Store({
       context.commit('setPost', {post, postId})
       context.commit('appendPostToThread', {threadId: post.threadId, postId})
       context.commit('appendPostToUser', {userId: post.userId, postId})
+    },
+
+    // the only job of this action is to commit the setUser mutation
+    updateUser ({commit}, user) {
+      // the payload here is the userId that we can access under the key property of the user object
+      commit('setUser', {userId: user['.key'], user})
     }
   },
 
@@ -38,6 +44,10 @@ export default new Vuex.Store({
       // Each Vue.set is an individual state change. We use Vue.set to add or delete object properties
       // set post
       Vue.set(state.posts, postId, post)    // Vue.set is used to make the changes reactive
+    },
+
+    setUser (state, {user, userId}) {
+      Vue.set(state.users, userId, user)
     },
 
     appendPostToThread (state, {postId, threadId}) {
