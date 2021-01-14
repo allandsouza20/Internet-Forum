@@ -35,18 +35,21 @@ export default new Vuex.Store({
     },
 
     createThread ({state, commit, dispatch}, {text, title, forumId}) {
-      const threadId = 'greatThread' + Math.random()
-      const userId = state.authId
-      // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
-      // to get it in seconds, we can divide it by 1000
-      // Math.floor returns the largest integer that is less than or equal to the given number
-      const publishedAt = Math.floor(Date.now() / 1000)
-      const forum = {'.key': threadId, title, forumId, publishedAt, userId}
+      return new Promise((resolve, reject) => {
+        const threadId = 'greatThread' + Math.random()
+        const userId = state.authId
+        // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
+        // to get it in seconds, we can divide it by 1000
+        // Math.floor returns the largest integer that is less than or equal to the given number
+        const publishedAt = Math.floor(Date.now() / 1000)
+        const forum = {'.key': threadId, title, forumId, publishedAt, userId}
 
-      commit('setThread', {threadId, forum})
-      commit('appendThreadToForum', {forumId, threadId})
-      commit('appendThreadToUser', {userId, threadId})
-      dispatch('createPost', {text, threadId})
+        commit('setThread', {threadId, forum})
+        commit('appendThreadToForum', {forumId, threadId})
+        commit('appendThreadToUser', {userId, threadId})
+        dispatch('createPost', {text, threadId})
+        resolve(state.threads[threadId])
+      })
     },
     // the only job of this action is to commit the setUser mutation
     updateUser ({commit}, user) {

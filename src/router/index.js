@@ -39,7 +39,7 @@ export default new Router({
     {
       // here, :id defines a dynamic segment
       // NOTE: The router always tries to match a route from the top to the bottom
-      path: '/thread/create',
+      path: '/thread/create/:forumId',
       name: 'ThreadCreate',
       component: ThreadCreate,
       props: true
