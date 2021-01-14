@@ -16,8 +16,8 @@
 // To be able to use a component inside another, you will need to import it to register it.
 // import ThreadListItem from '@/components/ThreadListItem'
 
-import PostList from '@/components/PostList'
-import PostEditor from '@/components/PostEditor'
+import PostList from '../components/PostList'
+import PostEditor from '../components/PostEditor'
 
 export default {
   // components option is an object that contains the components

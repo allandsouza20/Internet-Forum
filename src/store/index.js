@@ -47,8 +47,24 @@ export default new Vuex.Store({
         commit('setThread', {threadId, forum})
         commit('appendThreadToForum', {forumId, threadId})
         commit('appendThreadToUser', {userId, threadId})
+
         dispatch('createPost', {text, threadId})
         resolve(state.threads[threadId])
+      })
+    },
+
+    updateThread ({state, commit}, {title, text, id}) {
+      return new Promise((resolve, reject) => {
+        const thread = state.threads[id]
+        const post = state.posts[thread.firstPostId]
+
+        const newThread = {...thread, title}
+        const newPost = {...post, text}
+
+        commit('setThread', {thread: newThread, threadId: id})
+        commit('setPost', {post: newPost, postId: thread.firstPostId})
+
+        resolve(newThread)
       })
     },
     // the only job of this action is to commit the setUser mutation
@@ -72,8 +88,8 @@ export default new Vuex.Store({
       Vue.set(state.users, userId, user)
     },
 
-    setThread (state, {forum, threadId}) {
-      Vue.set(state.threads, threadId, forum)
+    setThread (state, {thread, threadId}) {
+      Vue.set(state.threads, threadId, thread)
     },
 
     appendPostToThread (state, {postId, threadId}) {
