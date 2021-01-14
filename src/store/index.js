@@ -7,7 +7,18 @@ Vue.use(Vuex)
 
 // export the Vuex store
 export default new Vuex.Store({
-  state: sourceData,
+  state: {
+    // ... is called a spread operator
+    ...sourceData,
+    authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'    // authId is used to grab the authenticated user from the state
+  },
+
+  getters: {
+    // a getter can be used anywhere in our application
+    authUser (state) {
+      return state.users[state.authId]
+    }
+  },
 
   actions: {
     createPost (context, post) {
