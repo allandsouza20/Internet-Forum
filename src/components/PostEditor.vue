@@ -16,7 +16,8 @@
       <!-- v-on is used to listen to a native or a custom event, We can also use @ instead of v-on -->
       </div>
       <div class="form-actions">
-        <button class="btn-blue">Submit post</button>
+        <button v-if="isUpdate" @click.prevent="cancel" class="btn btn-ghost">Cancel</button>
+        <button class="btn-blue">{{isUpdate ? 'Update' : 'Submit post'}}</button>
       </div>
     </form>
 
@@ -53,6 +54,10 @@ export default {
       .then(post => {
         this.$emit('save', {post})
       })
+    },
+
+    cancel () {
+      this.$emit('cancel')
     },
 
     create () {
