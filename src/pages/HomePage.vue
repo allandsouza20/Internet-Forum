@@ -1,6 +1,6 @@
 <!-- The components directory contains the components of our web page -->
 <template>
-  <div class="col-full">
+  <div class="col-full push-top">
     <h1>Welcome to the forum</h1>
     <CategoryList :categories="categories"/>    <!-- NOTE: The component template needs to be wrapped in one root element, in this case, div -->
   </div>
