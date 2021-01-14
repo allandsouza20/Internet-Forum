@@ -15,9 +15,14 @@
         </div>
 
         <div class="post-content">
-            <div v-if="!editing">
+<!--           v-if on a template element serves as a invisible wrapper -->
+          <template v-if="!editing">
+            <div >
               {{ post.text }}
             </div>
+            <a @click.prevent="editing = true" href="#" style="margin-left: auto;" class="link-unstyled" title="Make a change"><i class="fa fa-pencil"></i></a>
+          </template>
+
             <div v-else>
               <PostEditor
               :post="post"
