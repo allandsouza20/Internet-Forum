@@ -10,6 +10,7 @@
                 <img class="avatar-large" v-bind:src="user.avatar" alt="">
             </a>
 
+            <p class="desktop-only text-small">{{ userThreadsCount }} threads</p>
             <p class="desktop-only text-small">{{ userPostCount }} posts</p>
 
         </div>
@@ -83,6 +84,14 @@ export default {
       // return Object.keys(this.user.posts).length
       // return countObjectProperties(this.user.posts)
       return this.$store.getters.usersPostsCount(this.post.userId)
+    },
+    userThreadsCount () {
+        // const postIds = this.user.posts;
+        // const postIdsArray = Object.keys(posts)
+        // return postIdsArray.length
+      // return Object.keys(this.user.posts).length
+      // return countObjectProperties(this.user.posts)
+      return this.$store.getters.usersThreadsCount(this.post.userId)
     }
   }
 }
