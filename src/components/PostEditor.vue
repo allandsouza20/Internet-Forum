@@ -38,7 +38,7 @@ export default {
 
   methods: {
     save () {
-      const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
+      // const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
       //  threadId and the userId properties are foreign keys that connect the posts with the related resources.
       // since we won't use the post keyword later on, we can use the const keyword to declare it. This means that we cannot assign values to the variable post again but change it's contents.
       const post = {
@@ -48,15 +48,16 @@ export default {
         // Math.floor returns the largest integer that is less than or equal to the given number
         publishedAt: Math.floor(Date.now() / 1000),
         threadId: this.threadId,
-        userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2',
+        userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2'
         // since we can't use . in the property name, we will have to wrap it in quotes
-        '.key': postId
+        // '.key': postId
       }
       // to clean up the textarea after the post is submitted
       this.text = ''   // this will be reflected in the textarea since we have bound it using two way binding using v-model
       // here, {post} is a object, which we will be accessing using the object key.
       // we are using a custom event to pass data from the child component to the parent component.
       this.$emit('save', {post})   // this is used to emit a custom event. Here, we are emmitting a save-post event and we are passing the event to the listener.
+      this.$store.dispatch('createPost', post)
     }
   }
 }
