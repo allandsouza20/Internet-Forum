@@ -25,7 +25,7 @@
 
             <div v-else>
               <PostEditor
-              :post="post"
+              :post="{text: post.text}"
               @save="editing = false"
               @cancel="editing= false"
               />
