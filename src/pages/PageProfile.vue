@@ -1,11 +1,13 @@
 <template>
   <div class="flex-grid">
-<!--    <UserProfileCard-->
-<!--      :user="user"-->
-<!--      :userPostsCount="userPostsCount"-->
-<!--      :userThreadsCount="userThreadsCount"-->
-<!--    />-->
+    <UserProfileCard
+      v-if="!edit"
+      :user="user"
+      :userPostsCount="userPostsCount"
+      :userThreadCount="userThreadsCount"
+    />
     <UserProfileCardEditor
+      v-else
       :user="user"
       :userPostsCount="userPostsCount"
       :userThreadCount="userThreadsCount"
@@ -38,6 +40,14 @@ export default {
     UserProfileCard,
     UserProfileCardEditor
   },
+
+  props: {
+    edit: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   computed: {
     ...mapGetters(({
       user: 'authUser'    // map the local user property to the authUser getter

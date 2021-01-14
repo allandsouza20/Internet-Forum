@@ -50,6 +50,13 @@ export default new Router({
       props: true
     },
     {
+      // here, :id defines a dynamic segment
+      path: '/me/edit',
+      name: 'ProfileEdit',
+      component: Profile,
+      props: {edit: true}
+    },
+    {
       // * symbol is used to catch all unmatched paths
       path: '*',
       name: 'NotFound',

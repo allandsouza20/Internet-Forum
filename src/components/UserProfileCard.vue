@@ -21,7 +21,7 @@
 
       <div class="stats">
         <span>{{ userPostsCount }} posts</span>
-        <span>{{ userThreadsCount }} threads</span>
+        <span>{{ userThreadCount }} threads</span>
       </div>
 
       <hr>
@@ -34,7 +34,11 @@
 
     <div class="text-center">
       <hr>
-      <a href="edit-profile.html" class="btn-green btn-small">Edit Profile</a>
+      <router-link
+      :to="{name: 'ProfileEdit'}"
+      class="btn-green btn-small">
+        Edit Profile
+      </router-link>
     </div>
 
   </div>

@@ -42,7 +42,7 @@
       </div>
 
       <div class="btn-group space-between">
-        <button class="btn-ghost">Cancel</button>
+        <button @click.prevent="cancel" class="btn-ghost">Cancel</button>
         <button @click.prevent="save" type="submit" class="btn-blue">Save</button>
       </div>
     </div>
@@ -79,6 +79,12 @@ export default {
     //  update the user inside the vuex store
     //  ... is the spread operator that is used to clone objects so that the original reference isn't modified
       this.$store.dispatch('updateUser', {...this.activeUser})
+    //  redirect the user to the profile page when they click on save
+      this.$router.push({name: 'Profile'})
+    },
+
+    cancel () {
+      this.$router.push({name: 'Profile'})
     }
   }
 }
