@@ -1,7 +1,7 @@
 <template>
 
 
-    <div class="post">
+    <div v-if="post && user" class="post">
 
         <div class="user-info">
             <a href="#" class="user-name">{{ user.name }}</a>

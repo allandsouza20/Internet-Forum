@@ -1,5 +1,5 @@
 <template>
-  <div class="col-large push-top">
+  <div v-if="thread && user" class="col-large push-top">
     <h1>{{ thread.title }}
 <!--      using the tag option, we can decide the element that we want to render -->
     <router-link
@@ -24,9 +24,10 @@
 <script>
 // To be able to use a component inside another, you will need to import it to register it.
 // import ThreadListItem from '@/components/ThreadListItem'
-
+import firebase from 'firebase'
 import PostList from '../components/PostList'
 import PostEditor from '../components/PostEditor'
+import {countObjectProperties} from '../utils'
 
 export default {
   // components option is an object that contains the components
@@ -64,15 +65,7 @@ export default {
     },
 
     contributorsCount () {
-    //  each person who posts a reply is known as a contributor
-    //   find the replies
-      const replies = Object.keys(this.thread.posts)
-      .filter(postId => postId !== this.thread.firstPostId)
-      .map(postId => this.$store.state.posts[postId])
-    //  get the user id's
-      const userIds = replies.map(post => post.userId)
-    //  count the unique id's
-      return userIds.filter((item, index) => index === userIds.indexOf(item)).length
+      return countObjectProperties(this.thread.contributors)
     },
 
     posts () {
@@ -84,6 +77,33 @@ export default {
       // keeps the post whose id's are included in the post id's array
       return Object.values(this.$store.state.posts).filter(post => postIds.includes(post['.key']))
     }
+  },
+
+  created () {
+    // fetch thread
+    firebase.database().ref('threads').child(this.id).once('value', snapshot => {
+      const thread = snapshot.val()
+      this.$store.commit('setThread', {threadId: snapshot.key, thread: {...thread, '.key': snapshot.key}})
+
+      // fetch user
+      firebase.database().ref('users').child(thread.userId).once('value', snapshot => {
+        const user = snapshot.val()
+        this.$store.commit('setUser', {userId: snapshot.key, user: {...user, '.key': snapshot.key}})
+      })
+
+      Object.keys(thread.posts).forEach(postId => {
+        // fetch post
+        firebase.database().ref('posts').child(postId).once('value', snapshot => {
+          const post = snapshot.val()
+          this.$store.commit('setPost', {postId: snapshot.key, post: {...post, '.key': snapshot.key}})
+          // fetch user
+          firebase.database().ref('users').child(post.userId).once('value', snapshot => {
+            const user = snapshot.val()
+            this.$store.commit('setUser', {userId: snapshot.key, user: {...user, '.key': snapshot.key}})
+          })
+        })
+      })
+    })
   }
   // state: used to describe all the data around our application
   // In Vue.js, the methods are functions with access to the component instance

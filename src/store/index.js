@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import sourceData from '@/data'
 import {countObjectProperties} from '../utils'
 
 // install the vuex plugin in the application
@@ -24,14 +23,20 @@ const makeAppendChildToParentMutation = ({parent, child}) =>
 export default new Vuex.Store({
   state: {
     // ... is called a spread operator
-    ...sourceData,
+    // ...sourceData,
+    categories: {},
+    forums: {},
+    threads: {},
+    posts: {},
+    users: {},
     authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'    // authId is used to grab the authenticated user from the state
   },
 
   getters: {
     // a getter can be used anywhere in our application
     authUser (state) {
-      return state.users[state.authId]
+      // return state.users[state.authId]
+      return {}
     },
 
   //  getters used to return the count of the users posts and the thread count
