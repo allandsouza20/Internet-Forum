@@ -4,7 +4,7 @@
         <textarea
         name=""
         id=""
-        cols="30"
+        cols="80"
         rows="10"
         class="form-input"
         v-model="text"
@@ -26,18 +26,36 @@
 export default {
   props: {
     threadId: {
-      required: true
+      // since we only need the threadId when we create a post
+      required: false
+    },
+
+    post: {
+      type: Object
     }
   },
 
   data () {
     return {
-      text: ''
+      text: this.post ? this.post.text : ''
+    }
+  },
+
+  computed: {
+    isUpdate () {
+      return !!this.post
     }
   },
 
   methods: {
     save () {
+      this.persist()
+      .then(post => {
+        this.$emit('save', {post})
+      })
+    },
+
+    create () {
       // const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
       //  threadId and the userId properties are foreign keys that connect the posts with the related resources.
       // since we won't use the post keyword later on, we can use the const keyword to declare it. This means that we cannot assign values to the variable post again but change it's contents.
@@ -52,7 +70,19 @@ export default {
       // here, {post} is a object, which we will be accessing using the object key.
       // we are using a custom event to pass data from the child component to the parent component.
       this.$emit('save', {post})   // this is used to emit a custom event. Here, we are emmitting a save-post event and we are passing the event to the listener.
-      this.$store.dispatch('createPost', post)
+      return this.$store.dispatch('createPost', post)
+    },
+
+    update () {
+      const payload = {
+        id: this.post['.key'],
+        text: this.text
+      }
+      return this.$store.dispatch('updatePost', payload)
+    },
+
+    persist () {
+      return this.isUpdate ? this.update() : this.create()
     }
   }
 }

@@ -72,6 +72,15 @@ export default new Vuex.Store({
         resolve(newThread)
       })
     },
+
+    updatePost ({state, commit}, {id, text}) {
+      return new Promise((resolve, reject) => {
+      //   find the post of the state using it's id
+        const post = state.posts[id]
+        commit('setPost', {postId: id, post: {...post, text}})
+        resolve(post)
+      })
+    },
     // the only job of this action is to commit the setUser mutation
     updateUser ({commit}, user) {
       // the payload here is the userId that we can access under the key property of the user object

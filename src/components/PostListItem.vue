@@ -15,8 +15,14 @@
         </div>
 
         <div class="post-content">
-            <div>
-            {{ post.text }}
+            <div v-if="!editing">
+              {{ post.text }}
+            </div>
+            <div v-else>
+              <PostEditor
+              :post="post"
+              @save="editing = false"
+              />
             </div>
         </div>
 
@@ -38,7 +44,7 @@
 // in Vue.js every component instance has it's own isolated scope, this means that you shouldn't reference parent data with it's child component.
 // all threads or components must be passed a thread id property to know which thread to show.
 import {countObjectProperties} from '../utils'
-
+import PostEditor from './PostEditor'
 export default {
     // props is used to pass data to the child component
     // using a computed property, we can make sure if changes happen in this.$store.state
@@ -47,6 +53,15 @@ export default {
     post: {
       required: true,
       type: Object
+    }
+  },
+  components: {
+    PostEditor
+  },
+
+  data () {
+    return {
+      editing: false
     }
   },
   computed: {
