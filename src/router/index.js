@@ -6,6 +6,7 @@ import Home from '@/pages/HomePage'
 import ThreadShow from '@/pages/PageThreadShow'
 import Category from '@/pages/PageCategory'
 import Forum from '@/pages/PageForum'
+import Profile from '@/pages/PageProfile'
 import PageNotFound from '@/pages/PageNotFound'
 
 // This tells vue to use the router plugin
@@ -39,6 +40,13 @@ export default new Router({
       path: '/thread/:id',
       name: 'ThreadShow',
       component: ThreadShow,
+      props: true
+    },
+    {
+      // here, :id defines a dynamic segment
+      path: '/me',
+      name: 'Profile',
+      component: Profile,
       props: true
     },
     {
