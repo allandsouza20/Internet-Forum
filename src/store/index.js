@@ -21,12 +21,17 @@ export default new Vuex.Store({
   },
 
   actions: {
-    createPost (context, post) {
+    createPost ({commit, state}, post) {
       const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
       post['.key'] = postId
-      context.commit('setPost', {post, postId})
-      context.commit('appendPostToThread', {threadId: post.threadId, postId})
-      context.commit('appendPostToUser', {userId: post.userId, postId})
+      post.userId = state.authId
+      // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
+      // to get it in seconds, we can divide it by 1000
+      // Math.floor returns the largest integer that is less than or equal to the given number
+      post.publishedAt = Math.floor(Date.now() / 1000)
+      commit('setPost', {post, postId})
+      commit('appendPostToThread', {threadId: post.threadId, postId})
+      commit('appendPostToUser', {userId: post.userId, postId})
     },
 
     // the only job of this action is to commit the setUser mutation

@@ -43,12 +43,7 @@ export default {
       // since we won't use the post keyword later on, we can use the const keyword to declare it. This means that we cannot assign values to the variable post again but change it's contents.
       const post = {
         text: this.text,
-        // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
-        // to get it in seconds, we can divide it by 1000
-        // Math.floor returns the largest integer that is less than or equal to the given number
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.threadId,
-        userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2'
+        threadId: this.threadId
         // since we can't use . in the property name, we will have to wrap it in quotes
         // '.key': postId
       }

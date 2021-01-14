@@ -39,15 +39,11 @@ export default {
     }
   },
 
-  data () {
-    return {
-      // To make the form work, we can bind text-areas value to a data property, and invoke a method when the form is submitted
-      thread: this.$store.state.threads[this.id]
-      // newPostText: ''
-    }
-  },
-
   computed: {
+    thread () {
+      // To make the form work, we can bind text-areas value to a data property, and invoke a method when the form is submitted
+      return this.$store.state.threads[this.id]
+    },
     posts () {
       // Create an array with the post id's
       // Object.values converts it to an array
