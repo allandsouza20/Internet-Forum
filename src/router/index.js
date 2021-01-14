@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // Notice that we can specify any name when we import a component
 import Home from '@/pages/HomePage'
 import ThreadShow from '@/pages/PageThreadShow'
+import ThreadCreate from '@/pages/PageThreadCreate'
 import Category from '@/pages/PageCategory'
 import Forum from '@/pages/PageForum'
 import Profile from '@/pages/PageProfile'
@@ -33,6 +34,14 @@ export default new Router({
       name: 'Forum',
       component: Forum,
       // to set the route parameters as component props, we must set props to true
+      props: true
+    },
+    {
+      // here, :id defines a dynamic segment
+      // NOTE: The router always tries to match a route from the top to the bottom
+      path: '/thread/create',
+      name: 'ThreadCreate',
+      component: ThreadCreate,
       props: true
     },
     {
