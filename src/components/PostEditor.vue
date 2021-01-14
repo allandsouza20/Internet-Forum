@@ -88,7 +88,7 @@ export default {
       this.text = ''   // this will be reflected in the textarea since we have bound it using two way binding using v-model
       // here, {post} is a object, which we will be accessing using the object key.
       // we are using a custom event to pass data from the child component to the parent component.
-      this.$emit('save', {post})   // this is used to emit a custom event. Here, we are emmitting a save-post event and we are passing the event to the listener.
+      // this.$emit('save', {post})   // this is used to emit a custom event. Here, we are emmitting a save-post event and we are passing the event to the listener.
       return this.$store.dispatch('createPost', post)
     },
 
