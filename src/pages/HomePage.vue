@@ -1,6 +1,6 @@
 <!-- The components directory contains the components of our web page -->
 <template>
-  <div class="col-full push-top">
+  <div v-if="ready" class="col-full push-top">
     <h1>Welcome to the forum</h1>
     <CategoryList :categories="categories"/>    <!-- NOTE: The component template needs to be wrapped in one root element, in this case, div -->
   </div>
@@ -17,6 +17,12 @@ export default {
     CategoryList
   },
 
+  data () {
+    return {
+      ready: false
+    }
+  },
+
   computed: {
     categories () {
       return Object.values(this.$store.state.categories)
@@ -29,9 +35,11 @@ export default {
 
   created () {
     this.fetchAllCategories()
-    .then(categories => {
-      categories.forEach(category => this.fetchForums({ids: Object.keys(category.forums)}))
-    })
+    .then(categories => Promise.all(categories.map(category => this.fetchForums({ids: Object.keys(category.forums)}))))
+      .then(() => {
+      //  whatever call we place in here will run after all the actions are complete
+        this.ready = true
+      })
   }
 }
 </script>
