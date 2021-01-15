@@ -96,18 +96,17 @@ export default {
     return new Promise((resolve, reject) => {
     //   find the post of the state using it's id
       const post = state.posts[id]
-      commit('setPost', {
-        postId: id,
-        post: {
-          ...post,
-          text,
-          edited: {
-            at: Math.floor(Date.now() / 1000),
-            by: state.authId
-          }
-        }
-      })
-      resolve(post)
+      const edited = {
+        at: Math.floor(Date.now() / 1000),
+        by: state.authId
+      }
+
+      const updates = {text, edited}
+      firebase.database().ref('posts').child(id).update(updates)
+        .then(() => {
+          commit('setPost', {postId: id, post: {...post, text, edited}})
+          resolve(post)
+        })
     })
   },
   // the only job of this action is to commit the setUser mutation
