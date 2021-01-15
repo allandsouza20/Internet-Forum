@@ -77,7 +77,6 @@ export default {
       const registeredAt = Math.floor(Date.now() / 1000)
       const usernameLower = username.toLowerCase()
       email = email.toLowerCase()
-      // wrap all details in a user object and send it to firebase
       const user = {avatar, email, name, username, usernameLower, registeredAt}
       const userId = firebase.database().ref('users').push().key
       firebase.database().ref('users').child(userId).set(user)
@@ -86,6 +85,13 @@ export default {
           resolve(state.users[userId])
         })
     })
+  },
+
+  registerUsersWithEmailAndPassword ({dispatch}, {email, name, username, password, avatar = null}) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        return dispatch('createUser', {id: user.uid, email, name, username, password, avatar})
+      })
   },
 
   updateThread ({state, commit, dispatch}, {title, text, id}) {
