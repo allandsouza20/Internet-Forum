@@ -19,13 +19,13 @@ Vue.config.productionTip = false
 
 // Initialise firebase
 const firebaseConfig = {
-  apiKey: 'AIzaSyAFX_fYiG9c_nsM4SIMI3GSuobBQ8xPfFQ',
-  authDomain: 'forum-fb611.firebaseapp.com',
-  projectId: 'forum-fb611',
-  storageBucket: 'forum-fb611.appspot.com',
-  messagingSenderId: '741108783794',
-  appId: '1:741108783794:web:c701918c79fcd66837c7ab',
-  measurementId: 'G-6GR2TPYH9D'
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 }
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
