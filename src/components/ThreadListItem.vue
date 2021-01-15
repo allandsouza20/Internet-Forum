@@ -1,5 +1,5 @@
 <template>
-  <div class="thread">
+  <div v-if="thread && user" class="thread">
     <div>
       <p>
         <!-- <a :href="`/thread/${thread['.key']}`"></a>    Here, we are linking the contents of the thread with the title, so that whenever a user clicks on a thread, he / she is directed to the contents of the thread -->
