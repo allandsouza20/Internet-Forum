@@ -9,6 +9,7 @@
 <script>
 //      // Here, sourceData is a local variable, more like a file handler. @ will directly refer to the src directory. You can also you ../ to go back a directory to navigate to the json file.
 import CategoryList from '@/components/CategoryList'
+import {mapActions} from 'vuex'
 // console.log(sourceData)
 export default {
 
@@ -22,10 +23,14 @@ export default {
     }
   },
 
-  beforeCreate () {
-    this.$store.dispatch('fetchAllCategories')
+  methods: {
+    ...mapActions(['fetchAllCategories', 'fetchForums'])
+  },
+
+  created () {
+    this.fetchAllCategories()
     .then(categories => {
-      categories.forEach(category => this.$store.dispatch('fetchForums', {ids: Object.keys(category.forums)}))
+      categories.forEach(category => this.fetchForums({ids: Object.keys(category.forums)}))
     })
   }
 }
