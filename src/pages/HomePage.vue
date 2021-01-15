@@ -23,27 +23,10 @@ export default {
   },
 
   beforeCreate () {
-    console.log('beforeCreate', this.categories)
-  },
-
-  created () {
-    console.log('created', this.categories)
-  },
-
-  beforeMount () {
-    console.log('beforeMount', this.categories)
-  },
-
-  mounted () {
-    console.log('mounted', this.categories, this.$el.innerText)
-  },
-
-  beforeDestroy () {
-    console.log('beforeDestroy - turn off listeners', this.categories)
-  },
-
-  destroyed () {
-    console.log('destroyed', this.categories)
+    this.$store.dispatch('fetchAllCategories')
+    .then(categories => {
+      categories.forEach(category => this.$store.dispatch('fetchForums', {ids: Object.keys(category.forums)}))
+    })
   }
 }
 </script>
