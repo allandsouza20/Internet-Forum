@@ -8,6 +8,7 @@ import ThreadCreate from '@/pages/PageThreadCreate'
 import ThreadEdit from '@/pages/PageThreadEdit'
 import Category from '@/pages/PageCategory'
 import Forum from '@/pages/PageForum'
+import Register from '@/pages/PageRegister'
 import Profile from '@/pages/PageProfile'
 import PageNotFound from '@/pages/PageNotFound'
 
@@ -72,6 +73,12 @@ export default new Router({
       name: 'ProfileEdit',
       component: Profile,
       props: {edit: true}
+    },
+    {
+      // here, :id defines a dynamic segment
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       // * symbol is used to catch all unmatched paths
