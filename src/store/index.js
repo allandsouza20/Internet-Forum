@@ -140,6 +140,10 @@ export default new Vuex.Store({
       return dispatch('fetchItem', {resource: 'posts', id, emoji: '🧨'})
     },
 
+    fetchPosts ({dispatch}, {ids}) {
+      return dispatch('fetchItems', {resource: 'posts', emoji: 'chat', ids})
+    },
+
     fetchItem ({state, commit}, {id, emoji, resource}) {
       console.log('🔥', emoji, id)
       return new Promise((resolve, reject) => {
@@ -149,6 +153,11 @@ export default new Vuex.Store({
           resolve(state[resource][id])
         })
       })
+    },
+
+    fetchItems ({dispatch}, {ids, resource, emoji}) {
+      // Promise.all receives a array and returns a single promise that resolves when all the promises of the array are resolved
+      return Promise.all(ids.map(id => dispatch('fetchItem', {id, resource, emoji})))
     }
   },
 
