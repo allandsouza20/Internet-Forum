@@ -3,18 +3,28 @@ import firebase from 'firebase'
 export default {
 
   createPost ({commit, state}, post) {
-    const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
-    post['.key'] = postId
+    // const postId = 'greatPost' + Math.random()   // we are generating an id since newPost does not have an id
+    // generate a id for posts from firebase
+    const postId = firebase.database().ref('posts').push().key
+    // post['.key'] = postId
     post.userId = state.authId
   // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
   // to get it in seconds, we can divide it by 1000
   // Math.floor returns the largest integer that is less than or equal to the given number
     post.publishedAt = Math.floor(Date.now() / 1000)
-    commit('setPost', {post, postId})
-    commit('appendPostToThread', {parentId: post.threadId, childId: postId})
-    commit('appendPostToUser', {parentId: post.userId, childId: postId})
 
-    return Promise.resolve(state.posts[postId])
+    const updates = {}
+    updates[`posts/${postId}`] = post
+    updates[`threads/${post.threadId}/posts/${postId}`] = postId
+    updates[`users/${post.userId}/posts/${postId}`] = postId
+    firebase.database().ref().update(updates)
+      .then(() => {
+        // this ensures that the commits occur after the update
+        commit('setItem', {resource: 'posts', item: post, id: postId})
+        commit('appendPostToThread', {parentId: post.threadId, childId: postId})
+        commit('appendPostToUser', {parentId: post.userId, childId: postId})
+        return Promise.resolve(state.posts[postId])
+      })
   },
 
   createThread ({state, commit, dispatch}, {text, title, forumId}) {
