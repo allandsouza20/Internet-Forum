@@ -29,23 +29,44 @@ export default {
 
   createThread ({state, commit, dispatch}, {text, title, forumId}) {
     return new Promise((resolve, reject) => {
-      const threadId = 'greatThread' + Math.random()
+      // const threadId = 'greatThread' + Math.random()
+      // get a unique key
+      const threadId = firebase.database().ref('threads').push().key
+      const postId = firebase.database().ref('posts').push().key
       const userId = state.authId
     // Date.now() can be used to get the current timestamp. it returns the timestamp in milliseconds.
     // to get it in seconds, we can divide it by 1000
     // Math.floor returns the largest integer that is less than or equal to the given number
       const publishedAt = Math.floor(Date.now() / 1000)
-      const thread = {'.key': threadId, title, forumId, publishedAt, userId}
 
-      commit('setThread', {threadId, thread})
-      commit('appendThreadToForum', {parentId: forumId, childId: threadId})
-      commit('appendThreadToUser', {parentId: userId, childId: threadId})
+      const thread = {title, forumId, publishedAt, userId, firstPostId: postId, posts: {}}
+      thread.posts[postId] = postId
+      const post = {text, publishedAt, threadId, userId}
 
-      dispatch('createPost', {text, threadId})
-      .then(post => {
-        commit('setThread', {threadId, thread: {...thread, firstPostId: post['.key']}})
-      })
-      resolve(state.threads[threadId])
+      const updates = {}
+      // set thread
+      updates[`threads/${threadId}`] = thread
+      // append it to the forum
+      updates[`forums/${forumId}/threads/${threadId}`] = threadId
+      // append it to the user
+      updates[`users/${userId}/threads/${threadId}`] = threadId
+
+      updates[`posts/${postId}`] = post
+      updates[`users/${userId}/posts/${postId}`] = postId
+      firebase.database().ref().update(updates)
+        .then(() => {
+          // update thread
+          commit('setItem', {resource: 'threads', id: threadId, item: thread})
+          commit('appendThreadToForum', {parentId: forumId, childId: threadId})
+          commit('appendThreadToUser', {parentId: userId, childId: threadId})
+          // update post
+          commit('setItem', {resource: 'posts', item: post, id: postId})
+          commit('appendPostToThread', {parentId: post.threadId, childId: postId})
+          commit('appendPostToUser', {parentId: post.userId, childId: postId})
+
+          resolve(state.threads[threadId])
+          // return Promise.resolve(state.posts[postId])
+        })
     })
   },
 
