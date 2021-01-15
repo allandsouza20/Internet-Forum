@@ -4,16 +4,18 @@
     <TheNavBar/>   <!-- The header element should be rendered before the div with the class of container -->
     <div class="container">
       <router-view v-show="showPage" @ready="showPage = true"/>     <!-- This components renders the component of the active route -->
-      <div v-show="!showPage">loading...</div>
+      <AppSpinner v-show="!showPage"/>
     </div>
   </div>
 </template>
 
 <script>
 import TheNavBar from '@/components/TheNavBar'
+import AppSpinner from './components/AppSpinner'
 export default {
   components: {
-    TheNavBar
+    TheNavBar,
+    AppSpinner
   },
 
   data () {
