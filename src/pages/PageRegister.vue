@@ -60,7 +60,7 @@ export default {
 
   methods: {
     register () {
-      this.$store.dispatch('registerUsersWithEmailAndPassword', this.form)
+      this.$store.dispatch('registerUserWithEmailAndPassword', this.form)
       .then(() => this.$router.push('/'))
     }
   },
