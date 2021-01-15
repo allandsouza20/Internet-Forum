@@ -45,8 +45,5 @@ new Vue({
   // inject store into all components. This is the shorthand for store: store
   store,
   template: '<App/>',
-  components: { App },
-  beforeCreate () {
-    store.dispatch('fetchUser', {id: store.state.authId})
-  }
+  components: { App }
 })

@@ -17,7 +17,7 @@ export default new Vuex.Store({
     threads: {},
     posts: {},
     users: {},
-    authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'    // authId is used to grab the authenticated user from the state
+    authId: null    // authId is used to grab the authenticated user from the state
   },
   getters,
   actions,

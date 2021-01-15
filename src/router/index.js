@@ -9,6 +9,7 @@ import ThreadEdit from '@/pages/PageThreadEdit'
 import Category from '@/pages/PageCategory'
 import Forum from '@/pages/PageForum'
 import Register from '@/pages/PageRegister'
+import SignIn from '@/pages/PageSignIn'
 import Profile from '@/pages/PageProfile'
 import PageNotFound from '@/pages/PageNotFound'
 
@@ -79,6 +80,12 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      // here, :id defines a dynamic segment
+      path: '/signin',
+      name: 'SignIn',
+      component: SignIn
     },
     {
       // * symbol is used to catch all unmatched paths
